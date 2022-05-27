@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+  <title>Tic-Tac-Toe</title>
+  <link rel="stylesheet" href="/css/profile1.css">
+  <style>
+    button{
+      height: 100px;
+      width: 100px;
+      margin: 4px 2px;
+      font-size: 60px;
+      vertical-align: top;
+    }
+    
+    #playButton{
+      font-size: 16px;
+      height: 50px;
+      width: 316px;
+    }
+  </style>
+  </head>
+  <body>
+    <h1> Tic-Tac-Toe </h1>
+    <button id="button1"></button>
+    <button id="button2"></button>
+    <button id="button3"></button>
+    <br>
+    <button id="button4"></button>
+    <button id="button5"></button>
+    <button id="button6"></button>
+    <br>
+    <button id="button7"></button>
+    <button id="button8"></button>
+    <button id="button9"></button>
+    
+    <p><button id="playButton">Play Again</button>
+    
+    <p>Next turn:
+    <select id="selectTurn">
+      <option value="X">X</option>
+      <option value="O">O</option> 
+    </select>
+    
+    <script>
+      
+      var buttons = [button1, button2, button3, button4, button5, button6, button7, button8, button9]
+      var gameover = false;
+      
+      function checkCombination(b1, b2, b3){
+        if(b1.innerHTML != '' && b1.innerHTML == b2.innerHTML && b1.innerHTML == b3.innerHTML){
+          gameover = true;
+          b1.style.backgroundColor = 'limeGreen';
+          b2.style.backgroundColor = 'limeGreen';
+          b3.style.backgroundColor = 'limeGreen';
+        }
+      }
+      
+      function checkWin(){
+        checkCombination(button1 , button2, button3);
+        checkCombination(button4 , button5, button6);
+        checkCombination(button7 , button8, button9);
+        checkCombination(button1 , button4, button7);
+        checkCombination(button2 , button5, button8);
+        checkCombination(button3 , button6, button9);
+        checkCombination(button1 , button5, button9);
+        checkCombination(button3 , button5, button7);
+      }
+      
+      function pickSquare(){
+        if(gameover || this.innerHTML != '') return;
+        
+        this.innerHTML = selectTurn.value;
+        
+        if(selectTurn.value == 'X'){
+          selectTurn.value = 'O';
+        }else {
+          selectTurn.value = 'X';
+        }
+        
+        checkWin();
+      }
+      
+        function resetGame(){
+          
+          for (var i = 0; i < buttons.length; i++){
+            buttons[i].style.backgroundColor = '';
+            buttons[i].innerHTML = '';
+          }
+          gameover = false;
+        
+      }
+      
+     for (var i = 0; i< buttons.length; i++){
+       buttons[i].onclick = pickSquare;
+     }
+      playButton.onclick = resetGame;
+    
+    </script>
+  </body>
+</html>
